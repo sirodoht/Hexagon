@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Hexagon
   - Triangle
+  - RestartButton
+  - UIPanel
   layers:
   - Default
   - TransparentFX

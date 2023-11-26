@@ -70,17 +70,17 @@ public class CubeSpawner : MonoBehaviour
 
         }
 
-        if (Vector3.Distance(objectArray[0].transform.position, Vector3.zero) < 0.5f)
+        if (Vector3.Distance(objectArray[0].transform.position, Vector3.zero) < 0.35f)
         {
             movingHexagon = false;
-            if (!ScoreController.Instance.hasCollided)
-            {
-                RestartSequence();
-            }
-            else
-            {
-                Debug.Log("game over");
-            }
+            RestartSequence();
+        }
+
+        if (ScoreController.Instance.hasCollided)
+        {
+            movingHexagon = false;
+            Debug.Log("game over");
+            ScoreController.Instance.GameOver();
         }
 
     }
