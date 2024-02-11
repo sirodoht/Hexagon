@@ -8,6 +8,7 @@ TagManager:
   - Triangle
   - RestartButton
   - UIPanel
+  - Background
   layers:
   - Default
   - TransparentFX

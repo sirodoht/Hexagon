@@ -533,7 +533,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2
+  orthographic size: 1.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -557,13 +557,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!1 &1028274161
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +665,8 @@ GameObject:
   - component: {fileID: 1159841055}
   - component: {fileID: 1159841056}
   - component: {fileID: 1159841057}
+  - component: {fileID: 1159841058}
+  - component: {fileID: 1159841059}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -726,6 +728,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasCollided: 0
+--- !u!114 &1159841058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159841053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc1a1121dfd24431b3196d8c12e254f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1159841059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159841053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010a3c39e29d446aea093a25fe5145ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startColor: {r: 0.8962264, g: 0.40461317, b: 0.2494215, a: 0}
+  endColor: {r: 0.17590779, g: 0.52391833, b: 0.6320754, a: 0}
 --- !u!1 &1271886807
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,7 +836,7 @@ GameObject:
   - component: {fileID: 1650314971}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
