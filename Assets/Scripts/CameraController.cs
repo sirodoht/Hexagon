@@ -8,9 +8,11 @@ public class CameraController : MonoBehaviour
     private Transform _camTransform;
 
     private float _startCameraSize = 1.5f;
-    private float _endCameraSize = 2;
+    private float _endCameraSize = 2.5f;
 
-    private float _rate = 0.00001f;
+    private float _startRotateAngle = 85;
+    private float _endRotateAngle = 70;
+    private float _rotationTime = 0;
 
     private float _direction = 0.1f;
     private float _timePassedCamera;
@@ -30,23 +32,28 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _camTransform.Rotate(0, _direction, 0, Space.World);
+        var range = _endRotateAngle - _startRotateAngle;
+        var pingPong = (Mathf.Sin(_rotationTime * 1f - Mathf.PI / 2) + 1) / 2;
 
-        var speed = Time.time * _rate;
-        var pingpongValue = Mathf.PingPong(speed, 1f);
         _camera.orthographicSize = Mathf.Lerp(
             _startCameraSize,
             _endCameraSize,
-            pingpongValue
+            pingPong
         );
+
+        var xRotationValue = pingPong * range + _startRotateAngle;
+        Vector3 currentRotation = _camTransform.eulerAngles;
+        currentRotation.x = xRotationValue;
+        _camTransform.eulerAngles = currentRotation;
+        _rotationTime += Time.deltaTime;
+
+        _camTransform.Rotate(0, _direction, 0, Space.World);
 
         _timePassedCamera += Time.deltaTime;
         if (_timePassedCamera > Random.Range(3f, 5f))
         {
             _timePassedCamera = 0;
             _direction = -1 * _direction;
-
-            _rate = Random.Range(0.00001f, 0.00005f);
         }
     }
 }

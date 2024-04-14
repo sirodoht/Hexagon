@@ -9,6 +9,7 @@ TagManager:
   - RestartButton
   - UIPanel
   - Background
+  - TimerText
   layers:
   - Default
   - TransparentFX
