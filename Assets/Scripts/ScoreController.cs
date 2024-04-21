@@ -8,6 +8,8 @@ public class ScoreController : MonoBehaviour
 {
     public static ScoreController Instance { get; private set; }
     public bool hasCollided = false;
+    private Button startButton;
+    private CanvasGroup uiPanel;
 
     private float scoreTime = 0f;
 
@@ -25,13 +27,21 @@ public class ScoreController : MonoBehaviour
         }
 
         _audioController = GetComponent<AudioController>();
+
+        Time.timeScale = 0;
     }
 
     private void Start()
     {
-        var buttonObject = GameObject.FindWithTag("RestartButton");
-        var button = buttonObject.GetComponent<Button>();
-        button.onClick.AddListener(RestartGame);
+        Debug.Log("start");
+
+        uiPanel = GameObject.FindWithTag("UIPanel").GetComponent<CanvasGroup>();
+
+        var startButtonObject = GameObject.FindWithTag("StartButton");
+        startButton = startButtonObject.GetComponent<Button>();
+        Debug.Log(startButton);
+        startButton.onClick.AddListener(StartGame);
+
     }
 
     private void Update()
@@ -52,23 +62,38 @@ public class ScoreController : MonoBehaviour
         return timerText;
     }
 
-    public void GameOver()
+    public void StartGame()
     {
-        var uiPanel = GameObject.FindWithTag("UIPanel");
-        var canvasGroup = uiPanel.GetComponent<CanvasGroup>();
-        canvasGroup.alpha = 1;
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
+        Debug.Log("start game");
 
-        _audioController.SetAudioLowpass(true);
+        Time.timeScale = 1;
+
+        uiPanel.alpha = 0;
+        uiPanel.interactable = false;
+        uiPanel.blocksRaycasts = false;
+
+        startButton.gameObject.SetActive(false);
+
+        _audioController.PlayAudio();
     }
 
-    public void RestartGame()
+    public void GameOver()
     {
+        uiPanel.alpha = 1;
+        uiPanel.interactable = true;
+        uiPanel.blocksRaycasts = true;
+
+        _audioController.SetAudioLowpass(true);
+
+        StartCoroutine(RestartGame());
+    }
+
+    public IEnumerator RestartGame()
+    {
+        yield return new WaitForSeconds(1.5f);
+
         Debug.Log("restarting game");
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
-
-        _audioController.SetAudioLowpass(false);
     }
 }

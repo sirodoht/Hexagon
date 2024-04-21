@@ -31,7 +31,7 @@ public class BackgroundController : MonoBehaviour
         var speed = Time.time * _rate;
         var pingpongValue = Mathf.PingPong(speed, 1f);
         lerpedColor = Color.Lerp(startColor, endColor, pingpongValue);
-        Debug.Log($"color: {lerpedColor}");
+        //Debug.Log($"color: {lerpedColor}");
         _renderer.material.color = lerpedColor;
 
         _timePassedBackground += Time.deltaTime;

@@ -25,6 +25,11 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    public void PlayAudio()
+    {
+        _audio.Play();
+    }
+
     public void SetAudioLowpass(bool fadeOut)
     {
         StartCoroutine(FadeAudioMixer("LowpassLevel", 0.50f, fadeOut ? 500f : 5000f));

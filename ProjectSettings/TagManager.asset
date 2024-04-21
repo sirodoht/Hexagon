@@ -11,6 +11,7 @@ TagManager:
   - Background
   - TimerText
   - Audio
+  - StartButton
   layers:
   - Default
   - TransparentFX
