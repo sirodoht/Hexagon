@@ -11,6 +11,8 @@ public class ScoreController : MonoBehaviour
 
     private float scoreTime = 0f;
 
+    private AudioController _audioController;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -21,6 +23,8 @@ public class ScoreController : MonoBehaviour
         {
             Instance = this;
         }
+
+        _audioController = GetComponent<AudioController>();
     }
 
     private void Start()
@@ -55,6 +59,8 @@ public class ScoreController : MonoBehaviour
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+
+        _audioController.SetAudioLowpass(true);
     }
 
     public void RestartGame()
@@ -62,5 +68,7 @@ public class ScoreController : MonoBehaviour
         Debug.Log("restarting game");
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
+
+        _audioController.SetAudioLowpass(false);
     }
 }

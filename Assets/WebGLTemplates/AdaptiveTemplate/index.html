@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Super Hexagon</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      let isLandscape = true;
+      
+      var unityInstance = UnityLoader.instantiate("unityContainer", "%UNITY_WEBGL_BUILD_URL%", {
+        onProgress: UnityProgress,
+        compatibilityCheck: function (unityInstance, onsuccess, onerror) {
+          if (!UnityLoader.SystemInfo.hasWebGL) {
+            unityInstance.popup("Your browser does not support WebGL required for our game, please try a different one",
+            [{text: "OK", callback: onerror}]);
+/*          if (UnityLoader.SystemInfo.mobile) {
+            unityInstance.popup("Press OK to continue",
+            [{text: "OK", callback: onsuccess}]);
+          */} else {
+            onsuccess();
+            rescaleUnity();
+          }
+        }
+      });
+      
+      function rescaleUnity(){
+        var w = document.getElementById("aspect-ratio-box").style.width;
+        var h = document.getElementById("aspect-ratio-box").style.height;
+
+        document.getElementById("unityContainer").style.width = w + 'px';
+        document.getElementById("unityContainer").style.height = h + 'px';
+        checkOrientation();
+      }
+
+      function isIos() {
+        return [
+                  'iPad Simulator',
+                  'iPhone Simulator',
+                  'iPod Simulator',
+                  'iPad',
+                  'iPhone',
+                  'iPod'
+                ].includes(navigator.platform)
+                // iPad on iOS 13 detection
+                || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+      }
+
+
+      function disableFullscreenIos() {
+        console.log('called')
+        console.log(isIos())
+        if (isIos()) {
+          console.log('is ios')
+          unityInstance.SendMessage('Static', 'ExternalPlatformListener', 'true');
+        }
+      }
+
+
+
+      function checkOrientation() {
+        if(window.innerHeight > window.innerWidth && isLandscape){
+          unityInstance.SendMessage('Scripter', 'TriggerLandscapeNotice');
+          isLandscape = false;
+          // alert("Please use Landscape!");
+        }
+        else if (window.innerHeight < window.innerWidth && !isLandscape){
+          unityInstance.SendMessage('Scripter', 'HideLandscapeNotice');
+          isLandscape = true;
+        }
+      }
+      
+      window.addEventListener("orientationchange", function() {
+        rescaleUnity();
+        unityInstance.SendMessage('Scripter', 'RescaleUiElements');
+      });
+      window.addEventListener('resize', function(event){
+        rescaleUnity();
+        unityInstance.SendMessage('Scripter', 'RescaleUiElements');
+      });
+
+      
+    </script>
+  </head>
+  <body>
+  <div id="aspect-ratio-box">
+    <div class="webgl-content">
+      <div id="unityContainer"></div>
+    </div>
+  </div>
+  </body>
+</html>
